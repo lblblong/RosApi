@@ -27,7 +27,7 @@ class Map {
         setTimeout(() => {
             topic.subscribe(rep => {
                 console.log(`收到地图`)
-                console.log(rep)
+                // console.log(rep)
                 this.data = rep
                 this.drawPng(rep)
             })

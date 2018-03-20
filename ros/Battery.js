@@ -32,4 +32,4 @@ class Battery {
   }
 }
 
-module.exports = new Odom()
+module.exports = new Battery()
