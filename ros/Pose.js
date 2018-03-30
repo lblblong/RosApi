@@ -1,27 +1,27 @@
-let ROSLIB = require("roslib")
+let ROSLIB = require('roslib')
 
 class Pose {
     constructor() {
-        this.data = ""
+        this.data = ''
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
         })
 
         global.event.on(global.events.ROS_DISCONNECTED, () => {
-            this.data = ""
+            this.data = ''
         })
     }
 
     initDate() {
         let tfClient = new ROSLIB.TFClient({
             ros: global.ros,
-            fixedFrame: "map",
+            fixedFrame: 'map',
             angularThres: 0.01,
             transThres: 0.01
         })
 
-        tfClient.subscribe("base_footprint", tf => {
+        tfClient.subscribe('base_footprint', tf => {
             let pose = {
                 position: tf.translation,
                 orientation: tf.rotation
@@ -39,13 +39,13 @@ class Pose {
         w = parseFloat(w)
         let topic = new ROSLIB.Topic({
             ros: global.ros,
-            name: "/move_base_simple/goal",
-            messageType: "geometry_msgs/PoseStamped"
+            name: '/move_base_simple/goal',
+            messageType: 'geometry_msgs/PoseStamped'
         })
 
         topic.publish({
             header: {
-                frame_id: "map",
+                frame_id: 'map',
                 stamp: {
                     secs: Date.parse(new Date()) / 1000
                 }
@@ -70,7 +70,7 @@ class Pose {
     cancelNav() {
         let topic = new ROSLIB.Topic({
             ros: global.ros,
-            name: "/move_base/cancel"
+            name: '/move_base/cancel'
         })
 
         // 空id默认停止当前导航

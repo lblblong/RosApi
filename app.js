@@ -10,7 +10,7 @@ router = require("./middleware/router")("../apis")
 var app = new Koa()
 
 app.use(formatOutput())
-// app.use(rosStatus())
+app.use(rosStatus())
 app.use(logger())
 app.use(cors())
 app.use(router.routes())

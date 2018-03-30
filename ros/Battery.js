@@ -16,8 +16,7 @@ class Battery {
   initDate() {
     let topic = new ROSLIB.Topic({
       ros: global.ros,
-      name: '/battery',
-      messageType: 'Int32MultiArray'
+      name: '/battery'
     })
 
     topic.subscribe(msg => {

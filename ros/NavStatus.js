@@ -11,38 +11,38 @@ const NAVIGATION_ACCIDENT_TERMINATION = 3
 
 class NavStatus {
     constructor() {
-        this.data = END_OF_THE_NAVIGATION
+        this.data = { status: END_OF_THE_NAVIGATION }
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
         })
 
         global.event.on(global.events.ROS_DISCONNECTED, () => {
-            this.data = END_OF_THE_NAVIGATION
+            this.data = { status: END_OF_THE_NAVIGATION }
         })
     }
 
     initDate() {
         let topic = new ROSLIB.Topic({
             ros: global.ros,
-            name: '/move_base/status',
-            messageType: 'actionlib_msgs/GoalStatusArray'
+            name: '/move_base/status'
+            // messageType: 'actionlib_msgs/GoalStatusArray'
         })
 
         topic.subscribe(msg => {
             var statusList = msg.status_list
-            if (statusList.length == 0 || !statusList.pop().status) {
+            if (statusList.length == 0) {
                 return
             }
             var status = statusList.pop().status
             if (status == 2 || status == 3 || status == 8) {
-                this.data = END_OF_THE_NAVIGATION
+                this.data = { status: END_OF_THE_NAVIGATION }
             } else if (status == 1) {
-                this.data = IN_THE_NAVIGATION
+                this.data = { status: IN_THE_NAVIGATION }
             } else if (status == 5) {
-                this.data = INVALID_NAVIGATION
+                this.data = { status: INVALID_NAVIGATION }
             } else if (status == 4) {
-                this.data = NAVIGATION_ACCIDENT_TERMINATION
+                this.data = { status: NAVIGATION_ACCIDENT_TERMINATION }
             }
         })
     }
