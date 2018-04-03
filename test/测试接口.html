@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试接口</title>
+    <script src="./axios.js"></script>
+    <script src="./jquery.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            padding: 8px;
+            margin: 0px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            height: 40px;
+            width: 100%;
+            line-height: 40px;
+            margin-bottom: 8px;
+        }
+
+        header>.title {
+            font-weight: bold;
+            font-size: 20px;
+            color: #333;
+        }
+
+        header>.control>input,
+        button {
+            height: 30px;
+        }
+
+        .item {
+            min-height: 100px;
+            width: 100%;
+            border: 1px solid #dfdfdf;
+            margin-bottom: 8px;
+        }
+
+        .item>.title {
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 18px;
+            font-size: 16px;
+            background-color: royalblue;
+            color: white;
+        }
+
+        .item>.content {
+            padding: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="title">接口服务测试页</div>
+        <div class="control">
+            <input type="text" id="etIP" placeholder="服务所在的IP地址" value="127.0.0.1">
+            <button id="submit">确定</button>
+        </div>
+    </header>
+    <div class="item">
+        <div class="title">位置</div>
+        <div class="content pose"></div>
+    </div>
+    <div class="item">
+        <div class="title">速度</div>
+        <div class="content odom"></div>
+    </div>
+    <div class="item">
+        <div class="title">电池</div>
+        <div class="content battery"></div>
+    </div>
+    <div class="item">
+        <div class="title">导航状态</div>
+        <div class="content navStatus"></div>
+        <div style="color:red">* 详情请参见导航状态的九个值</div>
+    </div>
+    <div class="item">
+        <div class="title">地图</div>
+        <div class="content map">
+            <img id="map" src="" alt="地图">
+        </div>
+    </div>
+</body>
+
+<script>
+    // let ip = '192.168.3.166'
+    let ip = '127.0.0.1'
+    let inter
+
+    function upPose() {
+        axios.get('/v1/pose')
+            .then(rep => {
+                if (rep.data.code == -1) {
+                    $('.pose').text(rep.data.message)
+                    return
+                }
+                $('.pose').text(JSON.stringify(rep.data.data))
+            })
+            .catch(err => {
+                $('.pose').text('未能成功连接到' + ip)
+            })
+    }
+
+    function upOdom() {
+        axios.get('/v1/odom')
+            .then(rep => {
+                if (rep.data.code == -1) {
+                    $('.odom').text(rep.data.message)
+                    return
+                }
+                $('.odom').text(JSON.stringify(rep.data.data))
+            })
+            .catch(err => {
+                $('.odom').text('未能成功连接到' + ip)
+            })
+    }
+
+    function upBattery() {
+        axios.get('/v1/battery')
+            .then(rep => {
+                if (rep.data.code == -1) {
+                    $('.battery').text(rep.data.message)
+                    return
+                }
+                $('.battery').text(JSON.stringify(rep.data.data))
+            })
+            .catch(err => {
+                $('.battery').text('未能成功连接到' + ip)
+            })
+    }
+
+    function upNavStatus() {
+        axios.get('/v1/navStatus')
+            .then(rep => {
+                if (rep.data.code == -1) {
+                    $('.navStatus').text(rep.data.message)
+                    return
+                }
+                $('.navStatus').text(JSON.stringify(rep.data.data))
+            })
+            .catch(err => {
+                $('.navStatus').text('未能成功连接到' + ip)
+            })
+    }
+
+    function upMap() {
+        $('#map').attr({ src: `http://${ip}:8080/v1/map/png` })
+    }
+
+    function init() {
+        axios.defaults.baseURL = `http://${ip}:8080`
+        inter = setInterval(() => {
+            upPose()
+            upOdom()
+            upBattery()
+            upNavStatus()
+            upMap()
+        }, 100)
+    }
+
+    $('#submit').on('click', (e) => {
+        clearInterval(inter)
+        ip = $('#etIP').val()
+        init()
+    })
+
+    init()
+</script>
+
+</html>
