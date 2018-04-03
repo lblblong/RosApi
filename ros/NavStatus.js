@@ -11,14 +11,16 @@ const NAVIGATION_ACCIDENT_TERMINATION = 3
 
 class NavStatus {
     constructor() {
-        this.data = { status: END_OF_THE_NAVIGATION }
+        // this.data = { status: END_OF_THE_NAVIGATION }
+        this.data = 3
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
         })
 
         global.event.on(global.events.ROS_DISCONNECTED, () => {
-            this.data = { status: END_OF_THE_NAVIGATION }
+            // this.data = { status: END_OF_THE_NAVIGATION }
+            this.data = 3
         })
     }
 
@@ -35,15 +37,16 @@ class NavStatus {
                 return
             }
             var status = statusList.pop().status
-            if (status == 2 || status == 3 || status == 8) {
-                this.data = { status: END_OF_THE_NAVIGATION }
-            } else if (status == 1) {
-                this.data = { status: IN_THE_NAVIGATION }
-            } else if (status == 5) {
-                this.data = { status: INVALID_NAVIGATION }
-            } else if (status == 4) {
-                this.data = { status: NAVIGATION_ACCIDENT_TERMINATION }
-            }
+            // if (status == 2 || status == 3 || status == 8) {
+            //     this.data = { status: END_OF_THE_NAVIGATION }
+            // } else if (status == 1) {
+            //     this.data = { status: IN_THE_NAVIGATION }
+            // } else if (status == 5) {
+            //     this.data = { status: INVALID_NAVIGATION }
+            // } else if (status == 4) {
+            //     this.data = { status: NAVIGATION_ACCIDENT_TERMINATION }
+            // }
+            this.data = {status}
         })
     }
 }
