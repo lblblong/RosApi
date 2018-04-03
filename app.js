@@ -1,13 +1,20 @@
-require("./event")
-require("./ros")
-var Koa = require("koa")
-var logger = require("koa-logger")
-var cors = require("kcors")
-var formatOutput = require("./middleware/format-output")
-var rosStatus = require("./middleware/ros-status")
-router = require("./middleware/router")("../apis")
+require('./event')
+require('./ros')
+// 文件日志
+var log = require('./log')
+var Koa = require('koa')
+// 命令行 - 请求日志
+var logger = require('koa-logger')
+var cors = require('kcors')
+var formatOutput = require('./middleware/format-output')
+var rosStatus = require('./middleware/ros-status')
+router = require('./middleware/router')('../apis')
 
 var app = new Koa()
+
+app.on('error', (err, ctx) => {
+    log.error(err.message)
+})
 
 app.use(formatOutput())
 app.use(cors())
