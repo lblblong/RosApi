@@ -1,3 +1,4 @@
+let logger = require('../log')
 module.exports = () => {
     return async (ctx, next) => {
         try {
@@ -11,6 +12,7 @@ module.exports = () => {
                 }
             }
         } catch (err) {
+            logger.error(err.message)
             ctx.status = err.status || 200
             let message = err.message || 'error.'
             ctx.body = {
@@ -18,7 +20,6 @@ module.exports = () => {
                 message,
                 data: {}
             }
-            let body = ctx.body
         }
     }
 }
