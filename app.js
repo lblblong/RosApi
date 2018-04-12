@@ -1,3 +1,8 @@
+process.on('uncaughtException', err => {
+    console.log('捕获到无法处理的异常，已记录')
+    log.error(err)
+})
+
 require('./event')
 require('./ros')
 // 文件日志
