@@ -5,8 +5,7 @@ module.exports = {
         ctx.body = pose.data
     },
     "POST /v1/pose": async ctx => {
-        let query = ctx.query
-        let { x, y, z, w } = query
+        let { x, y, z, w } = ctx.request.body
         pose.startNavPose({
             x,
             y,
