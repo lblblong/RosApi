@@ -14,7 +14,7 @@ class ROS {
                 console.log(`开始订阅topic`)
                 global.ros = this.ros
                 global.event.emit(global.events.ROS_CONNECTED, this.ros)
-            }, 5000)
+            }, 1000)
         })
 
         this.ros.on('error', err => {})
@@ -36,4 +36,4 @@ class ROS {
     }
 }
 
-module.exports = new ROS('ws://127.0.0.1:9090')
+module.exports = new ROS('ws://192.168.3.166:9090')

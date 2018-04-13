@@ -30,7 +30,7 @@ class Map {
         this.data = rep
         this.drawPng(rep)
       })
-    }, 500)
+    }, 900)
   }
 
   drawPng(rep) {
