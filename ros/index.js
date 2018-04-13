@@ -36,4 +36,4 @@ class ROS {
     }
 }
 
-module.exports = new ROS('ws://192.168.3.166:9090')
+module.exports = new ROS('ws://127.0.0.1:9090')
