@@ -32,7 +32,7 @@ class ROS {
         this.bindEvent()
         setTimeout(() => {
             this.ros.connect(this.url)
-        }, 1000)
+        }, 5000)
     }
 }
 
