@@ -1,3 +1,6 @@
+// 文件日志
+var log = require('./log')
+
 process.on('uncaughtException', err => {
     console.log('捕获到无法处理的异常，已记录')
     log.error(err)
@@ -6,8 +9,7 @@ process.on('uncaughtException', err => {
 
 require('./event')
 require('./ros')
-// 文件日志
-var log = require('./log')
+
 var Koa = require('koa')
 // 命令行 - 请求日志
 var logger = require('koa-logger')
