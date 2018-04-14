@@ -1,4 +1,5 @@
 var nodemailer = require('nodemailer')
+var os = require('os')
 
 var transporter = nodemailer.createTransport({
     host: 'smtp.163.com',
@@ -14,7 +15,7 @@ var transporter = nodemailer.createTransport({
 var mailOptions = {
     from: '"lblblong" <lblblong@163.com>',
     to: 'lblblong@163.com',
-    subject: `异常反馈 - ${new Date()}`,
+    subject: `异常反馈 ${os.type()} - ${new Date()}`,
     html: `香喷喷的异常反馈来了~`,
     attachments: [
         {
