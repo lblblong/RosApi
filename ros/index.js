@@ -1,8 +1,10 @@
 let ROSLIB = require('roslib')
+let { ip } = require('../config')
 
 class ROS {
-    constructor(url) {
-        this.url = url || 'ws://localhost:9090'
+    constructor() {
+        this.url = `ws://${ip}:9090`
+        console.log(this.url)
         this.connect()
     }
 
@@ -36,4 +38,4 @@ class ROS {
     }
 }
 
-module.exports = new ROS('ws://127.0.0.1:9090')
+module.exports = new ROS()
