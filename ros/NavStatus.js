@@ -46,7 +46,7 @@ class NavStatus {
             // } else if (status == 4) {
             //     this.data = { status: NAVIGATION_ACCIDENT_TERMINATION }
             // }
-            this.data = {status}
+            this.data = { status: status }
         })
     }
 }
