@@ -1,8 +1,7 @@
-let navStatus = require("../ros/NavStatus")
+let navStatus = require('../ros/NavStatus')
 
 module.exports = {
-    "GET /v1/navStatus": async ctx => {
-        var data = navStatus.data
+    'GET /v1/navStatus': async ctx => {
         ctx.body = navStatus.data
     }
 }

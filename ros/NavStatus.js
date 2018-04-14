@@ -12,7 +12,7 @@ const NAVIGATION_ACCIDENT_TERMINATION = 3
 class NavStatus {
     constructor() {
         // this.data = { status: END_OF_THE_NAVIGATION }
-        this.data = 3
+        this.data = { status: 3 }
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
@@ -20,7 +20,7 @@ class NavStatus {
 
         global.event.on(global.events.ROS_DISCONNECTED, () => {
             // this.data = { status: END_OF_THE_NAVIGATION }
-            this.data = 3
+            this.data = { status: 3 }
         })
     }
 
@@ -46,7 +46,7 @@ class NavStatus {
             // } else if (status == 4) {
             //     this.data = { status: NAVIGATION_ACCIDENT_TERMINATION }
             // }
-            this.data = { status: status }
+            this.data = { status }
         })
     }
 }
