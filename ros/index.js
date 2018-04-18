@@ -16,7 +16,7 @@ class ROS {
                 console.log(`开始订阅topic`)
                 global.ros = this.ros
                 global.event.emit(global.events.ROS_CONNECTED, this.ros)
-            }, 1000)
+            }, 5000)
         })
 
         this.ros.on('error', err => {})
