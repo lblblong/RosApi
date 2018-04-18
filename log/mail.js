@@ -1,6 +1,8 @@
 var nodemailer = require('nodemailer')
 var os = require('os')
 var { environment } = require('../config')
+var package = require('../package.json')
+var fs = require('fs')
 
 function sendMail() {
     var transporter = nodemailer.createTransport({
@@ -17,7 +19,7 @@ function sendMail() {
     var mailOptions = {
         from: '"lblblong" <lblblong@163.com>',
         to: 'lblblong@163.com',
-        subject: `异常反馈 ${os.type()} - ${new Date()}`,
+        subject: `异常反馈 ${os.type()} - 版本：${package.version}`,
         html: `香喷喷的异常反馈来了~`,
         attachments: [
             {
@@ -27,13 +29,15 @@ function sendMail() {
         ]
     }
 
-    transporter.sendMail(mailOptions, function(err, info) {
+    transporter.sendMail(mailOptions, async function(err, info) {
         if (err) {
             console.log('异常反馈失败')
             console.log(err)
             return
         }
         console.log('异常已反馈到 lblblong@163.com')
+        // let rep = await fs.unlinkSync('./log/log.txt')
+        // console.log('异常已重置')
     })
 }
 
