@@ -12,11 +12,14 @@ module.exports = () => {
                 }
             }
         } catch (err) {
-            logger.error(err.message)
-            ctx.status = err.status || 200
+            ctx.status = 200
             let message = err.message || 'error.'
+            let code = err.status || -1
+            if (code != 404) {
+                logger.error(err.message)
+            }
             ctx.body = {
-                code: -1,
+                code,
                 message,
                 data: {}
             }
