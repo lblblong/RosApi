@@ -11,3 +11,7 @@ nodejs 版本的 rosapi
 npm install
 npm run start
 ```
+
+# 版本更新
+#### 2.0.1
+- 添加切换导航与建图api
