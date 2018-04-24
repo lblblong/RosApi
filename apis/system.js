@@ -4,7 +4,7 @@ module.exports = {
     'GET /v1/system/mapping': async ctx => {
         try {
             let rep = await callshSync(
-                '/home/ubuntu/zhrobot-ChangeService.sh',
+                '/home/ubuntu/zhrobot/zhrobot-ChangeService.sh',
                 ['mapping']
             )
             ctx.body = rep
@@ -15,7 +15,7 @@ module.exports = {
     'GET /v1/system/navigation': async ctx => {
         try {
             let rep = await callshSync(
-                '/home/ubuntu/zhrobot-ChangeService.sh',
+                '/home/ubuntu/zhrobot/zhrobot-ChangeService.sh',
                 ['navigation']
             )
             ctx.body = rep
