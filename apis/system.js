@@ -1,4 +1,5 @@
 var call_sh = require('child_process')
+let logger = require('../log')
 
 module.exports = {
     'GET /v1/system/mapping': async ctx => {
@@ -45,7 +46,7 @@ async function callshSync(file, para) {
         rep = JSON.parse(rep)
         return rep
     } catch (e) {
-        console.log(e.toString())
+        logger.error(e.message)
         throw e
     }
 }
