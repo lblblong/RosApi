@@ -1,23 +1,19 @@
-let ROSLIB = require("roslib")
+let ROSLIB = require('roslib')
 
 class Scan {
     constructor() {
-        this.data = ""
+        this.data = null
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
-        })
-
-        global.event.on(global.events.ROS_DISCONNECTED, () => {
-            this.data = ""
         })
     }
 
     initDate() {
         let topic = new ROSLIB.Topic({
             ros: global.ros,
-            name: "/scan",
-            messageType: "sensor_msgs/LaserScan"
+            name: '/scan',
+            messageType: 'sensor_msgs/LaserScan'
         })
 
         topic.subscribe(msg => {

@@ -2,14 +2,10 @@ let ROSLIB = require("roslib")
 
 class Odom {
     constructor() {
-        this.data = ""
+        this.data = null
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
-        })
-
-        global.event.on(global.events.ROS_DISCONNECTED, () => {
-            this.data = ""
         })
     }
 

@@ -4,14 +4,10 @@ let PNGImage = require('pngjs-image')
 
 class Map {
     constructor() {
-        this.data = ''
+        this.data = null
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
-        })
-
-        global.event.on(global.events.ROS_DISCONNECTED, () => {
-            this.data = ''
         })
     }
 

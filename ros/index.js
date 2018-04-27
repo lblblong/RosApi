@@ -10,8 +10,7 @@ class ROS {
 
     bindEvent() {
         this.ros.on('connection', () => {
-            console.log(`已连接到 ROS`)
-            console.log(`等待5秒后开始订阅topic(为避免ros还未初始化完成)`)
+            console.log(`已连接到 ROS，等待5秒后开始订阅topic`)
             setTimeout(() => {
                 console.log(`开始订阅topic`)
                 global.ros = this.ros
