@@ -6,17 +6,17 @@ let mappath = '/home/ubuntu/testmap'
 module.exports = {
     'GET /v1/map/data': async ctx => {
         let data = map.data
-        if (data == '') throw Error('地图还没加载完成')
+        if (data == null) throw Error('地图还没加载完成')
         ctx.body = data.data
     },
     'GET /v1/map/info': async ctx => {
         let data = map.data
-        if (data == '') throw Error('地图还没加载完成')
+        if (data == null) throw Error('地图还没加载完成')
         ctx.body = data.info
     },
     'GET /v1/map': async ctx => {
         let data = map.data
-        if (data == '') throw Error('地图还没加载完成')
+        if (data == null) throw Error('地图还没加载完成')
         ctx.body = {
             info: data.info,
             data: data.data
