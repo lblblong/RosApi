@@ -99,9 +99,7 @@
 </body>
 
 <script>
-    // let ip = '192.168.3.166'
     let ip = '127.0.0.1'
-    let inter
 
     async function upData() {
         try {
@@ -143,13 +141,10 @@
     }
 
     $('#submit').on('click', (e) => {
-        // clearInterval(inter)
         ip = $('#etIP').val()
         axios.defaults.baseURL = `http://${ip}:8080`
-        // init()
     })
 
-    // init()
     axios.defaults.baseURL = `http://${ip}:8080`
     upData()
 </script>
