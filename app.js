@@ -1,7 +1,12 @@
 // 文件日志
 var log = require('./log')
+let { environment } = require('./config')
 
 process.on('uncaughtException', err => {
+    if (environment == 'dev') {
+        console.error(err)
+        return
+    }
     console.log('捕获到无法处理的异常，已记录')
     log.error(err)
     // process.exit(0)
