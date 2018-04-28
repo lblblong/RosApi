@@ -103,84 +103,55 @@
     let ip = '127.0.0.1'
     let inter
 
-    function upPose() {
-        axios.get('/v1/pose')
-            .then(rep => {
-                if (rep.data.code == -1) {
-                    $('.pose').text(rep.data.message)
-                    return
-                }
+    async function upData() {
+        try {
+            let rep = await axios.get('/v1/pose')
+            if (rep.data.code == -1) {
+                $('.pose').text(rep.data.message)
+            } else {
                 $('.pose').text(JSON.stringify(rep.data.data))
-            })
-            .catch(err => {
-                $('.pose').text('未能成功连接到' + ip)
-            })
-    }
+            }
 
-    function upOdom() {
-        axios.get('/v1/odom')
-            .then(rep => {
-                if (rep.data.code == -1) {
-                    $('.odom').text(rep.data.message)
-                    return
-                }
+            rep = await axios.get('/v1/odom')
+            if (rep.data.code == -1) {
+                $('.odom').text(rep.data.message)
+            } else {
                 $('.odom').text(JSON.stringify(rep.data.data))
-            })
-            .catch(err => {
-                $('.odom').text('未能成功连接到' + ip)
-            })
-    }
+            }
 
-    function upBattery() {
-        axios.get('/v1/battery')
-            .then(rep => {
-                if (rep.data.code == -1) {
-                    $('.battery').text(rep.data.message)
-                    return
-                }
+            rep = await axios.get('/v1/battery')
+            if (rep.data.code == -1) {
+                $('.battery').text(rep.data.message)
+            } else {
                 $('.battery').text(JSON.stringify(rep.data.data))
-            })
-            .catch(err => {
-                $('.battery').text('未能成功连接到' + ip)
-            })
-    }
+            }
 
-    function upNavStatus() {
-        axios.get('/v1/navStatus')
-            .then(rep => {
-                if (rep.data.code == -1) {
-                    $('.navStatus').text(rep.data.message)
-                    return
-                }
+            rep = await axios.get('/v1/navStatus')
+            if (rep.data.code == -1) {
+                $('.navStatus').text(rep.data.message)
+            } else {
                 $('.navStatus').text(JSON.stringify(rep.data.data))
-            })
-            .catch(err => {
-                $('.navStatus').text('未能成功连接到' + ip)
-            })
-    }
+            }
 
-    function upMap() {
-        $('#map').attr({ src: `http://${ip}:8080/v1/map/png` })
-    }
-
-    function init() {
-        axios.defaults.baseURL = `http://${ip}:8080`
-        inter = setInterval(() => {
-            upPose()
-            upOdom()
-            upBattery()
-            upNavStatus()
-            upMap()
+            $('#map').attr({ src: `http://${ip}:8080/v1/map/png` })
+        } catch (e) {
+            
+        }
+        setTimeout(() => {
+            upData()
         }, 100)
     }
 
     $('#submit').on('click', (e) => {
-        clearInterval(inter)
+        // clearInterval(inter)
         ip = $('#etIP').val()
-        init()
+        axios.defaults.baseURL = `http://${ip}:8080`
+        // init()
     })
 
-    init()
+    // init()
+    axios.defaults.baseURL = `http://${ip}:8080`
+    upData()
 </script>
 
 </html>
