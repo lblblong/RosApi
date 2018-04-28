@@ -15,7 +15,10 @@ const logger = winston.createLogger({
     transports: [
         new winston.transports.File({
             filename: './log/log.txt',
-            level: 'error'
+            level: 'error',
+            maxsize: 1024 * 5,
+            maxFiles: 1,
+            tailable: true
         })
     ]
 })
