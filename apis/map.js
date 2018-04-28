@@ -47,7 +47,7 @@ module.exports = {
     'GET /v1/maps': async ctx => {
         try {
             let rep = await fs.readdirSync(mappath)
-            rep = rep.filter(filename => {
+            rep = rep.filter(async filename => {
                 let rep = await fs.statSync(filename)
                 if (!rep.isFile()) {
                     return false
@@ -63,7 +63,7 @@ module.exports = {
         }
     },
     // 切换地图
-    'POST /v1/maps':async ctx =>{
+    'POST /v1/maps': async ctx => {
         let { name } = ctx.request.body
         // try{
         //     let rep = await fs.readdirSync(mappath)
