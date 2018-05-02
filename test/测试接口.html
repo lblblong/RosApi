@@ -73,6 +73,12 @@
             <button id="submit">确定</button>
         </div>
     </header>
+
+    <div class="item">
+        <div class="title">自定义请求</div>
+        <button onclick="request()">request</button>
+    </div>
+
     <div class="item">
         <div class="title">位置</div>
         <div class="content pose"></div>
@@ -133,7 +139,7 @@
 
             $('#map').attr({ src: `http://${ip}:8080/v1/map/png` })
         } catch (e) {
-            
+
         }
         setTimeout(() => {
             upData()
@@ -146,7 +152,13 @@
     })
 
     axios.defaults.baseURL = `http://${ip}:8080`
-    upData()
+    // upData()
+
+
+    async function request() {
+        let rep = await axios.get('/v1/charge')
+        console.log(rep)
+    }
 </script>
 
 </html>

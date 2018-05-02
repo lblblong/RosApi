@@ -3,6 +3,7 @@ let ROSLIB = require('roslib')
 class Pose {
     constructor() {
         this.data = null
+        this.liseners = new Map()
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
@@ -23,7 +24,14 @@ class Pose {
                 orientation: tf.rotation
             }
             this.data = pose
+            for (let lisener of this.liseners.values()) {
+                lisener(pose)
+            }
         })
+    }
+
+    addLisener(key, lisener) {
+        this.liseners.set(key, lisener)
     }
 
     /** 导航到指定位置 */

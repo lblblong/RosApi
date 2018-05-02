@@ -3,6 +3,7 @@ class NavStatus {
     constructor() {
         // 导航状态默认值
         this.data = { status: 3 }
+        this.liseners = new Map()
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
@@ -27,7 +28,18 @@ class NavStatus {
             }
             var status = statusList.pop().status
             this.data = { status }
+            for (let lisener of this.liseners.values()) {
+                lisener(status)
+            }
         })
+    }
+
+    addLisener(key, lisener) {
+        this.liseners.set(key, lisener)
+    }
+
+    removeLisener(key) {
+        this.liseners.delete(key)
     }
 }
 
