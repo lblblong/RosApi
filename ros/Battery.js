@@ -55,18 +55,30 @@ class Battery {
         }
         // 开始充电，状态变更
         global.charge = true
-        // 超时时间为 3 分钟
-        setTimeout(() => {
-            if (global.charge == true) {
-                global.charge = false
-            }
-        }, 1000 * 60 * 3)
-        pose.startNavPose({ x: 0.1, y: 0, z: 0, w: 1 })
+        pose.startNavPose({ x: 0.7, y: 0, z: 0, w: 1 })
+        // 最近的一次导航状态
+        let lastStatus = 3
         navState.addLisener('charge', status => {
             if (status == 3) {
-                // 已导航到充电位置，开始充电
-                this.charge(1)
-                navState.removeLisener('charge')
+                let xE = Math.abs(0.7 - pose.data.position.x)
+                let yE = Math.abs(0 - pose.data.position.y)
+                if (xE <= 0.2 && yE <= 0.2) {
+                    // 已导航到充电位置，开始充电
+                    this.charge(1)
+                    navState.removeLisener('charge')
+                } else {
+                    // 丢弃本次状态
+                }
+            // } else if (
+            //     // 前往充电中收到其他导航
+            //     status == 0
+            // ) {
+            //     // 如果上个状态为 1 ，则认为是前往充电过程中，收到了其他导航
+            //     if (lastStatus == 1) {
+            //         // 未导航到充电位置
+            //         global.charge = false
+            //         navState.removeLisener('charge')
+            //     }
             } else if (
                 // 收到取消请求，已取消
                 status == 2 ||
@@ -83,6 +95,7 @@ class Battery {
                 global.charge = false
                 navState.removeLisener('charge')
             }
+            lastStatus = status
         })
     }
 
@@ -93,6 +106,7 @@ class Battery {
 
     // 取消自动充电
     cancelCharge() {
+        pose.cancelNav()
         this.charge(0)
         global.charge = false
     }
