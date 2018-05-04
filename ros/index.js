@@ -22,6 +22,8 @@ class ROS {
 
         this.ros.on('close', () => {
             console.log(`与 ROS 的连接已断开，重新连接中...`)
+            // 重置自动充电状态
+            global.charge = false
             delete global.ros
             global.event.emit(global.events.ROS_DISCONNECTED, this.ros)
             this.connect()
