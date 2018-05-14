@@ -6,28 +6,39 @@ let navState = require('./NavStatus')
 class Battery {
     constructor() {
         this.data = null
+        this.timer = null
 
         global.event.on(global.events.ROS_CONNECTED, () => {
             this.initDate()
         })
     }
 
+    callback(msg){
+        let rep = msg.data
+        // 如果取毫安时电量，需要除以360
+        this.data = {
+            status: rep[0],
+            capacity: rep[1],
+            soc: rep[2]
+        }
+        this.verfBattery(rep)
+    }
+
     initDate() {
+        if (this.timer) clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+            if (this.data == null) {
+                topic.unsubscribe(this.callback)
+                this.initDate()
+            }
+        }, 5000)
+
         let topic = new ROSLIB.Topic({
             ros: global.ros,
             name: '/battery'
         })
 
-        topic.subscribe(msg => {
-            let rep = msg.data
-            // 如果取毫安时电量，需要除以360
-            this.data = {
-                status: rep[0],
-                capacity: rep[1],
-                soc: rep[2]
-            }
-            this.verfBattery(rep)
-        })
+        topic.subscribe(this.callback)
     }
 
     // 检查电量
@@ -69,16 +80,16 @@ class Battery {
                 } else {
                     // 丢弃本次状态
                 }
-            // } else if (
-            //     // 前往充电中收到其他导航
-            //     status == 0
-            // ) {
-            //     // 如果上个状态为 1 ，则认为是前往充电过程中，收到了其他导航
-            //     if (lastStatus == 1) {
-            //         // 未导航到充电位置
-            //         global.charge = false
-            //         navState.removeLisener('charge')
-            //     }
+                // } else if (
+                //     // 前往充电中收到其他导航
+                //     status == 0
+                // ) {
+                //     // 如果上个状态为 1 ，则认为是前往充电过程中，收到了其他导航
+                //     if (lastStatus == 1) {
+                //         // 未导航到充电位置
+                //         global.charge = false
+                //         navState.removeLisener('charge')
+                //     }
             } else if (
                 // 收到取消请求，已取消
                 status == 2 ||
