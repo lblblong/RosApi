@@ -13,22 +13,11 @@ class Battery {
         })
     }
 
-    callback(msg){
-        let rep = msg.data
-        // 如果取毫安时电量，需要除以360
-        this.data = {
-            status: rep[0],
-            capacity: rep[1],
-            soc: rep[2]
-        }
-        this.verfBattery(rep)
-    }
-
     initDate() {
         if (this.timer) clearTimeout(this.timer)
         this.timer = setTimeout(() => {
             if (this.data == null) {
-                topic.unsubscribe(this.callback)
+                topic.unsubscribe()
                 this.initDate()
             }
         }, 5000)
@@ -38,7 +27,16 @@ class Battery {
             name: '/battery'
         })
 
-        topic.subscribe(this.callback)
+        topic.subscribe(msg => {
+            let rep = msg.data
+            // 如果取毫安时电量，需要除以360
+            this.data = {
+                status: rep[0],
+                capacity: rep[1],
+                soc: rep[2]
+            }
+            this.verfBattery(rep)
+        })
     }
 
     // 检查电量
