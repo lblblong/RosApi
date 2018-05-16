@@ -47,16 +47,13 @@ module.exports = {
     'GET /v1/maps': async ctx => {
         try {
             let rep = await fs.readdirSync(mappath)
-            rep = rep.filter(async filename => {
-                let rep = await fs.statSync(filename)
-                if (!rep.isFile()) {
-                    return false
-                }
-                if (!filename.endsWith('.pgm')) {
-                    return false
-                }
-                return true
-            })
+            rep = rep
+                .filter(filename => {
+                    return filename.endsWith('.pgm')
+                })
+                .map(filename => {
+                    return filename.slice(0, filename.length - 4)
+                })
             ctx.body = rep
         } catch (e) {
             throw e
@@ -65,6 +62,15 @@ module.exports = {
     // 切换地图
     'POST /v1/maps': async ctx => {
         let { name } = ctx.request.body
+        try {
+            let rep = await callshSync(
+                '/home/ubuntu/zhrobot/zhrobot-ChangeService.sh',
+                [name]
+            )
+            ctx.body = rep
+        } catch (e) {
+            throw Error('地图切换失败')
+        }
         // try{
         //     let rep = await fs.readdirSync(mappath)
         //     let filename = rep.find(filename=>{
