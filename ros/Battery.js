@@ -35,7 +35,7 @@ class Battery {
                 capacity: rep[1],
                 soc: rep[2]
             }
-            this.verfBattery(rep)
+            // this.verfBattery(rep)
         })
     }
 
