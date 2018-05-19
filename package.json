@@ -1,11 +1,11 @@
 {
     "name": "rosapi",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "description": "",
     "main": "app.js",
     "scripts": {
         "start": "pm2 start app.js -f",
-        "dev": "node app.js dev"
+        "dev": "node app.js"
     },
     "author": "lblblong",
     "license": "ISC",
