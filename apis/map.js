@@ -63,11 +63,12 @@ module.exports = {
     'POST /v1/maps': async ctx => {
         let { name } = ctx.request.body
         try {
-            let rep = await callshSync(
-                '/home/ubuntu/zhrobot/zhrobot-ChangeService.sh',
-                [name]
-            )
-            ctx.body = rep
+            throw Error('等待脚本')
+            // let rep = await callshSync(
+            //     '/home/ubuntu/zhrobot/zhrobot-ChangeService.sh',
+            //     [name]
+            // )
+            // ctx.body = rep
         } catch (e) {
             throw Error('地图切换失败')
         }
