@@ -63,31 +63,13 @@ module.exports = {
     'POST /v1/maps': async ctx => {
         let { name } = ctx.request.body
         try {
-            throw Error('等待脚本')
-            // let rep = await callshSync(
-            //     '/home/ubuntu/zhrobot/zhrobot-ChangeService.sh',
-            //     [name]
-            // )
-            // ctx.body = rep
+            let rep = await callshSync(
+                '/home/ubuntu/zhrobot/change_map.sh',
+                [name]
+            )
+            ctx.body = rep
         } catch (e) {
             throw Error('地图切换失败')
         }
-        // try{
-        //     let rep = await fs.readdirSync(mappath)
-        //     let filename = rep.find(filename=>{
-        //         return filename == `${name}.yml`
-        //     })
-        //     if(!filename){
-        //         throw Error('地图不存在')
-        //     }
-        //     let testfile = rep.find(filename=>{
-        //         return filename == 'test.yml'
-        //     })
-        //     if(testfile){
-
-        //     }
-        // }catch(e){
-
-        // }
     }
 }
