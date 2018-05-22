@@ -1,4 +1,5 @@
 var call_sh = require('child_process')
+let logger = require('../log')
 
 async function callshSync(file, para) {
     // 匹配第一个以 “{” 开头，“}” 结尾的字符串
