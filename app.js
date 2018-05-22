@@ -37,7 +37,7 @@ app.use(logger())
 app.use(router.routes())
 app.use(router.allowedMethods())
 // 静态资源【地图】
-app.use(static(__dirname + '/static/map', { extensions: ['yaml', 'pgm'] }))
+// app.use(static(__dirname + '/static/map', { extensions: ['yaml', 'pgm'] }))
 app.listen(8080)
 
 console.log(`服务已启动在 8080 端口`)
