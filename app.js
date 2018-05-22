@@ -22,6 +22,7 @@ var cors = require('kcors')
 var formatOutput = require('./middleware/format-output')
 var rosStatus = require('./middleware/ros-status')
 router = require('./middleware/router')('../apis')
+var static = require('koa-static')
 
 var app = new Koa()
 
@@ -35,6 +36,8 @@ app.use(rosStatus())
 app.use(logger())
 app.use(router.routes())
 app.use(router.allowedMethods())
+// 静态资源【地图】
+app.use(static(__dirname + '/static/map', { extensions: ['yaml', 'pgm'] }))
 app.listen(8080)
 
 console.log(`服务已启动在 8080 端口`)

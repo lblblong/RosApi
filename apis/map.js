@@ -47,14 +47,24 @@ module.exports = {
     'GET /v1/maps': async ctx => {
         try {
             let rep = await fs.readdirSync(mappath)
-            rep = rep
+            let pgm = rep
                 .filter(filename => {
                     return filename.endsWith('.pgm')
                 })
                 .map(filename => {
                     return filename.slice(0, filename.length - 4)
                 })
-            ctx.body = rep
+            let yaml = rep
+                .filter(filename => {
+                    return filename.endsWith('.yaml')
+                })
+                .map(filename => {
+                    return filename.slice(0, filename.length - 5)
+                })
+            pgm = pgm.filter(filename => {
+                return yaml.find(filename) != undefined
+            })
+            ctx.body = pgm
         } catch (e) {
             throw e
         }
@@ -63,10 +73,9 @@ module.exports = {
     'POST /v1/maps': async ctx => {
         let { name } = ctx.request.body
         try {
-            let rep = await callshSync(
-                '/home/ubuntu/zhrobot/change_map.sh',
-                [name]
-            )
+            let rep = await callshSync('/home/ubuntu/zhrobot/change_map.sh', [
+                name
+            ])
             ctx.body = rep
         } catch (e) {
             throw Error('地图切换失败')
