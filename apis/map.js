@@ -1,7 +1,6 @@
 let map = require('../ros/Map')
 let fs = require('fs')
 let { callshSync } = require('../util/call_sh')
-let send = require('koa-send')
 let mappath = '/home/ubuntu/testmap'
 
 module.exports = {
@@ -90,18 +89,17 @@ module.exports = {
     'POST /v1/maps/upload': async ctx => {
         let file = ctx.request.body.files.file
         let reader = fs.createReadStream(file.path)
-        // let upStream = fs.createWriteStream(`D:/${file.name}`)
         let upStream = fs.createWriteStream(`${mappath}/${file.name}`)
         reader.pipe(upStream)
     },
     // 删除地图
     'DELETE /v1/maps/:name': async ctx => {
-        let { name } = ctx.query
+        let { name } = ctx.params
         let pgmPath = `${mappath}/${name}.pgm`
         let yamlPath = `${mappath}/${name}.yaml`
         try {
             let pgmrep = await fs.unlinkSync(pgmPath)
-            let yamlrep = await fs.unlinkSync(yamlrep)
+            let yamlrep = await fs.unlinkSync(yamlPath)
         } catch (e) {
             throw e
         }
