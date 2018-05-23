@@ -9,7 +9,14 @@ function addMapping(router, mapping) {
             console.log(`register URL mapping: GET ${path}`)
         } else if (url.startsWith('POST ')) {
             var path = url.substring(5)
-            router.post(path, koaBody({ multipart: true }), mapping[url])
+            router.post(
+                path,
+                koaBody({
+                    multipart: true,
+                    formidable: { maxFieldsSize: 1000 * 1024 * 1024 }
+                }),
+                mapping[url]
+            )
             console.log(`register URL mapping: POST ${path}`)
         } else if (url.startsWith('PUT ')) {
             var path = url.substring(4)

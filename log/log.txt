@@ -1,0 +1,7 @@
+{"日期":"2018-05-23T02:01:12.800Z","message":"ENOENT: no such file or directory, open 'C:\\Users\\zhihui\\AppData\\Local\\Temp\\upload_959d9df32fe941bf95dfc69d3c2132c7'"}
+{"日期":"2018-05-23T02:01:12.801Z","message":"ENOENT: no such file or directory, open 'C:\\Users\\zhihui\\AppData\\Local\\Temp\\upload_859a1ca4dc72c9048100f4c0ca0c48cc'"}
+{"日期":"2018-05-23T03:49:55.712Z","message":"地图还没加载完成"}
+{"日期":"2018-05-23T05:01:36.830Z","message":"spawnSync /home/ubuntu/zhrobot/change_map.sh ENOENT"}
+{"日期":"2018-05-23T05:01:36.832Z","message":"地图切换失败"}
+{"日期":"2018-05-23T05:02:16.103Z","message":"spawnSync /home/ubuntu/zhrobot/change_map.sh ENOENT"}
+{"日期":"2018-05-23T05:02:16.105Z","message":"地图切换失败"}

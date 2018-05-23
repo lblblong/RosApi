@@ -13,7 +13,7 @@ process.on('uncaughtException', err => {
 })
 
 require('./event')
-require('./ros')
+// require('./ros')
 
 var Koa = require('koa')
 // 命令行 - 请求日志
@@ -22,7 +22,7 @@ var cors = require('kcors')
 var formatOutput = require('./middleware/format-output')
 var rosStatus = require('./middleware/ros-status')
 router = require('./middleware/router')('../apis')
-var static = require('koa-static')
+let koaStaticPlus = require('koa-static-plus')
 
 var app = new Koa()
 
@@ -30,14 +30,13 @@ app.on('error', (err, ctx) => {
     log.error(err.message)
 })
 
+app.use(koaStaticPlus('/home/ubuntu/testmap', { pathPrefix: '/public' }))
 app.use(formatOutput())
 app.use(cors())
-app.use(rosStatus())
+// app.use(rosStatus())
 app.use(logger())
 app.use(router.routes())
 app.use(router.allowedMethods())
-// 静态资源【地图】
-// app.use(static(__dirname + '/static/map', { extensions: ['yaml', 'pgm'] }))
 app.listen(8080)
 
 console.log(`服务已启动在 8080 端口`)
