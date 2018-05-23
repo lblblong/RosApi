@@ -13,7 +13,7 @@ process.on('uncaughtException', err => {
 })
 
 require('./event')
-// require('./ros')
+require('./ros')
 
 var Koa = require('koa')
 // 命令行 - 请求日志
@@ -33,7 +33,7 @@ app.on('error', (err, ctx) => {
 app.use(koaStaticPlus('/home/ubuntu/testmap', { pathPrefix: '/public' }))
 app.use(formatOutput())
 app.use(cors())
-// app.use(rosStatus())
+app.use(rosStatus())
 app.use(logger())
 app.use(router.routes())
 app.use(router.allowedMethods())
