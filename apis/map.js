@@ -62,7 +62,11 @@ module.exports = {
                     return filename.slice(0, filename.length - 5)
                 })
             pgm = pgm.filter(filename => {
-                return yaml.find(filename) != undefined
+                return (
+                    yaml.find(yamlname => {
+                        return yamlname == filename
+                    }) != undefined
+                )
             })
             ctx.body = pgm
         } catch (e) {
