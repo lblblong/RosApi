@@ -1,7 +1,12 @@
 let map = require('../ros/Map')
 let fs = require('fs')
 let { callshSync } = require('../util/call_sh')
+// 地图路径
 let mappath = '/home/ubuntu/testmap'
+// 保存地图脚本
+let save_map_sh = '/home/ubuntu/zhrobot/save_map.sh'
+// 切换地图脚本
+let change_map_sh = '/home/ubuntu/zhrobot/change_map.sh'
 
 module.exports = {
     'GET /v1/map/data': async ctx => {
@@ -35,9 +40,7 @@ module.exports = {
     'POST /v1/maps/save': async ctx => {
         let { name } = ctx.request.body
         try {
-            let rep = await callshSync('/home/ubuntu/zhrobot/save_map.sh', [
-                name
-            ])
+            let rep = await callshSync(save_map_sh, [name])
             ctx.body = rep
         } catch (e) {
             throw Error('地图保存失败')
@@ -77,9 +80,7 @@ module.exports = {
     'POST /v1/maps': async ctx => {
         let { name } = ctx.request.body
         try {
-            let rep = await callshSync('/home/ubuntu/zhrobot/change_map.sh', [
-                name
-            ])
+            let rep = await callshSync(change_map_sh, [name])
             ctx.body = rep
         } catch (e) {
             throw Error('地图切换失败')
