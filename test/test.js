@@ -18,15 +18,15 @@ let topic_pose = '/robot_pose'
 // 雷达信息
 let topic_scan = '/scan'
 // 导航路径
-let topic_path = '/move_base/NavfnROS/plan'
+let topic_path = '/move_base/TebLocalPlannerROS/global_plan'
 // 导航状态
 let topic_nav_status = '/move_base/status'
 
 ros.on('connection', () => {
     // subscribe(topic_pose)
     // subscribe(topic_scan)
-    subscribe(topic_path)
-    // subscribe(topic_nav_status)
+    // subscribe(topic_path)
+    subscribe(topic_nav_status)
 })
 
 function subscribe(name) {

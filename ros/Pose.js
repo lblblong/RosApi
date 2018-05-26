@@ -17,24 +17,18 @@ class Pose {
         this.timer = setTimeout(() => {
             if (this.data == null) {
                 console.log('位置订阅可能丢失，重新订阅')
-                tfClient.unsubscribe('base_footprint')
+                topic.unsubscribe('base_footprint')
                 this.initDate()
             }
         }, 5000)
 
-        let tfClient = new ROSLIB.TFClient({
+        let topic = new ROSLIB.Topic({
             ros: global.ros,
-            fixedFrame: 'map',
-            angularThres: 0.01,
-            transThres: 0.01
+            name: '/robot_pose'
         })
 
-        tfClient.subscribe('base_footprint', tf => {
-            let pose = {
-                position: tf.translation,
-                orientation: tf.rotation
-            }
-            this.data = pose
+        topic.subscribe(msg => {
+            this.data = msg
             for (let lisener of this.liseners.values()) {
                 lisener(pose)
             }

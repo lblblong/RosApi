@@ -12,7 +12,7 @@ class Path {
     initDate() {
         let topic = new ROSLIB.Topic({
             ros: global.ros,
-            name: '/move_base/NavfnROS/plan',
+            name: '/move_base/TebLocalPlannerROS/global_plan',
             messageType: 'nav_msgs/Path'
         })
 
