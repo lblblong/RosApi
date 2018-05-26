@@ -1,4 +1,5 @@
 let ROSLIB = require('roslib')
+let fs = require('fs')
 
 let url = 'ws://192.168.3.166:9090'
 let ros = new ROSLIB.Ros()
@@ -22,10 +23,10 @@ let topic_path = '/move_base/NavfnROS/plan'
 let topic_nav_status = '/move_base/status'
 
 ros.on('connection', () => {
-    subscribe(topic_pose)
-    subscribe(topic_scan)
+    // subscribe(topic_pose)
+    // subscribe(topic_scan)
     subscribe(topic_path)
-    subscribe(topic_nav_status)
+    // subscribe(topic_nav_status)
 })
 
 function subscribe(name) {
@@ -35,6 +36,16 @@ function subscribe(name) {
     })
 
     topic.subscribe(msg => {
-        console.log(msg)
+        // console.log(msg)
+        // topic.unsubscribe()
+        let msgstr = JSON.stringify(msg)
+        console.log(msgstr)
+        // fs.writeFile(`./${name}.json`, msg, (err, data) => {
+        //     if (err) {
+        //         console.log('写出失败')
+        //     } else {
+        //         console.log('写出成功')
+        //     }
+        // })
     })
 }
