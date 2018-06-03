@@ -24,7 +24,7 @@ class Map {
             topic.subscribe(rep => {
                 console.log(`收到地图`)
                 this.data = rep
-                this.drawPng(rep)
+                this.drawPng2(rep)
             })
         }, 900)
     }
@@ -55,7 +55,41 @@ class Map {
             })
         }
 
-        image.writeImage('./map.png', function(err) {
+        image.writeImage('./map.png', function (err) {
+            if (err) console.log(err)
+            console.log(`地图已保存为图片`)
+        })
+    }
+
+    drawPng2(rep) {
+        let info = rep.info
+        let mapData = rep.data
+        let width = info.width
+        let height = info.height
+        var image = PNGImage.createImage(width, height)
+
+        for (let row = 0; row < height; row++) {
+            for (let col = 0; col < width; col++) {
+                let mapI = col + ((height - row - 1) * width)
+                let data = mapData[mapI]
+                let val;
+                if (data === 100) {
+                    val = 0;
+                } else if (data === 0) {
+                    val = 255;
+                } else {
+                    val = 127;
+                }
+                image.setPixel(col, row, {
+                    red: val,
+                    green: val,
+                    blue: val,
+                    alpha: 255
+                })
+            }
+        }
+
+        image.writeImage('./map.png', function (err) {
             if (err) console.log(err)
             console.log(`地图已保存为图片`)
         })
